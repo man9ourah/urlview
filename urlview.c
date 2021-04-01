@@ -634,6 +634,36 @@ into a line of its own in your \n\
 	move (LINES - 1, 0);
 	clrtoeol ();
 	break;
+      case 'c': // Add copy url
+	strncpy (buf, url[current], sizeof (buf));
+	buf[sizeof (buf) - 1] = 0;
+	if (buf[0])
+	{
+	  char *part, *tmpbuf;
+
+	  free (url[current]);
+	  url[current] = strdup (buf);
+	  endwin ();
+
+	  tmpbuf = strdup("echo %s | xsel -ib");
+	  part = strtok(tmpbuf, ":");
+	  do {
+              quote (scratch, sizeof (scratch), url[current]);
+	      if (strstr (part, "%s"))
+		  snprintf (buf, sizeof (buf), part, scratch);
+	      else
+		  snprintf (buf, sizeof (buf), "%s %s", part, scratch);
+	      printf ("Executing: %s...\n", buf);
+	      fflush (stdout);
+	      if (system (buf) == 0)
+		  break;
+	  } while
+	      ((part = strtok(NULL, ":")) != NULL);
+	  free(tmpbuf);
+	}
+    mvaddstr (LINES - 1, 0, "url was copied to clipboard...");
+    clrtoeol ();
+	break;
       case '0':
       case '1':
       case '2':
