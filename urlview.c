@@ -602,6 +602,7 @@ into a line of its own in your \n\
       case '\n':
       case '\r':
       case KEY_ENTER:
+      case 'l':
       case ' ':
 	strncpy (buf, url[current], sizeof (buf));
 	buf[sizeof (buf) - 1] = 0;
