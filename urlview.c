@@ -676,8 +676,8 @@ into a line of its own in your \n\
       case '8':
       case '9':
 	buf[0] = i; buf[1] = 0;
-	/* mvaddstr (LINES - 1, 0, "Jump to url: "); */
-	if (/*mutt_enter_string ((unsigned char *)buf, sizeof (buf), LINES - 1, 13, 0) == 0 && */ buf[0]) // no need to confirm number entry..
+	mvaddstr (LINES - 1, 0, "Jump to url: ");
+	if (mutt_enter_string ((unsigned char *)buf, sizeof (buf), LINES - 1, 13, 0) == 0 && buf[0])
 	{
 	  i = atoi (buf);
 	  if (i < 1 || i > urlcount) 
